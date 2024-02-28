@@ -85,4 +85,4 @@ def Recorrido(Lista, Longitud, tasaRecorrido):
 
 #Test = "ATGCCACTCTA"
 #Recorrido(Test, 3, 2)
-Test(5);
+permutaciones(5);
