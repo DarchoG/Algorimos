@@ -13,7 +13,6 @@ Caracteres = []
 Direccion = ""
 Bandera = True;
 
-
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
