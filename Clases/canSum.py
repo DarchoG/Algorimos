@@ -11,11 +11,11 @@ def canSum(Digito, Valores, Memoria = {}):
 
         Restante = Digito - i;
         if(canSum(Restante, Valores, Memoria)):
-            Memoria[Restante] = True;
+            Memoria[Digito] = True;
             return True;
 
     Memoria[Digito] = False;
     return False;
 
-print(canSum(7, [2, 3]));
+print(canSum(7, [4, 3]));
 print(canSum(300, [7, 14]));
