@@ -1,10 +1,12 @@
 def dijkstra (Grafo, Inicio):
 
     Pesos = {}
+    Caminos = {}
     Visitados = set();
 
     for nodo in Grafo:
         Pesos[nodo] = float("inf");
+        Caminos[nodo] = None;
     
     Pesos[Inicio] = 0     
 
@@ -32,16 +34,32 @@ def dijkstra (Grafo, Inicio):
             if(distanciaActual < Pesos[conexiones]):
 
                 Pesos[conexiones] = distanciaActual;
+                Caminos[conexiones] = nodoMinimo
 
-    return Pesos;
+    return Pesos, Caminos;
 
-graph = {
-    'A': {'B': 1, 'C': 4},
-    'B': {'A': 1, 'C': 2, 'D': 5},
-    'C': {'A': 4, 'B': 2, 'D': 1},
-    'D': {'B': 5, 'C': 1}
+def generarCaminos(Grafo, Nodo):
+    Camino = [Nodo];
+    while Grafo[Nodo] is not None:
+        Nodo = Grafo[Nodo]
+        Camino.append(Nodo);
+    Camino.reverse();
+    return Camino;
+
+Grafo = {
+    'A': {'B': 11, 'C': 43, 'E' : 12},
+    'B': {'A': 13, 'C': 31, 'D': 22},
+    'C': {'A': 43, 'B': 12, 'D': 1},
+    'D': {'B': 51, 'C': 13},
+    'E': {'A': 3, 'C' : 23}
 }
 
-start_node = 'A'
-print("Distancias más cortas desde el nodo", start_node)
-print(dijkstra(graph, start_node))
+Inicio  = 'A'
+Pesos, Rutas = dijkstra(Grafo, Inicio)
+print("Distancias más cortas desde el nodo", Inicio)
+print(Pesos)
+print()
+
+for Elemento in Grafo:
+    Camino = generarCaminos(Rutas, Elemento);
+    print("Camino corto de ", Elemento, " : ", Camino)
