@@ -1,67 +1,47 @@
-    def dikstraRecursivo(Grafo, Inicio):
+def dijkstra (Grafo, Inicio):
 
-        Diccionario = {};
-        Visitados = set();
-        
-        for Nodo, Peso in Grafo:
+    Pesos = {}
+    Visitados = set();
 
-            Diccionario[Nodo] = float("inf");
+    for nodo in Grafo:
+        Pesos[nodo] = float("inf");
+    
+    Pesos[Inicio] = 0     
 
-        Diccionario[Inicio].update(0);
+    while (len(Visitados) < len(Pesos)):
 
-        for Nodo, Peso in Grafo[Inicio]:
-            camino(Grafo, Nodo, Peso, Visitados)
+        pesoMinimo = float("inf");
+        nodoMinimo = None;
 
+        for Nodo in Grafo:
 
-    def camino(Grafo, Direccion, Peso, Visitados):
+            if(Nodo not in Visitados and Pesos[Nodo] < pesoMinimo):
 
-        Visitados.append(Direccion);
-        
-        if(Direccion in Visitados):
-            return;
+                pesoMinimo = Pesos[Nodo];
+                nodoMinimo = Nodo;
 
-        Copia = Visitados.copy();
+        if (nodoMinimo == None):
+            return Pesos;
 
-        for Vertice, Arista in Grafo[Direccion]:
-            
-            camino(Grafo, Direccion, Peso, Visitados);
+        Visitados.add(nodoMinimo);
 
-    def dikstra(Grafo, Inicio):
+        for conexiones, costo in Grafo[nodoMinimo].items():
 
-        Diccionario = {};
-        Visitados = set();
-        
-        for Nodo, Peso in Grafo:
+            distanciaActual = Pesos[nodoMinimo] + costo;
 
-            Diccionario[Nodo] = float("inf");
+            if(distanciaActual < Pesos[conexiones]):
 
-        Diccionario[Inicio].update(0);
+                Pesos[conexiones] = distanciaActual;
 
-        for Nodo, Peso in Grafo[Inicio]:
-            camino(Grafo, Nodo, Peso, Visitados)
+    return Pesos;
 
-    def camino(Grafo, Direccion, Peso, Visitados):
+graph = {
+    'A': {'B': 1, 'C': 4},
+    'B': {'A': 1, 'C': 2, 'D': 5},
+    'C': {'A': 4, 'B': 2, 'D': 1},
+    'D': {'B': 5, 'C': 1}
+}
 
-        Visitados.append(Direccion);
-        
-        if(Direccion in Visitados):
-            return;
-
-        Copia = Visitados.copy();
-
-        for Vertice, Arista in Grafo[Direccion]:
-            
-            camino(Grafo, Vertice, Peso + Arista, Visitados);
-
-    def dikstra(Grafo, Inicio, Final):
-
-        Diccionario = {};
-        
-        for Nodo, Peso in Grafo:
-
-            Diccionario[Nodo] = float("inf");
-
-        Diccionario[Inicio].update(0);
-
-        for Nodo, Peso in Grafo[Inicio]:
-            camino(Grafo, Nodo, Peso, Visitados)
+start_node = 'A'
+print("Distancias más cortas desde el nodo", start_node)
+print(dijkstra(graph, start_node))
